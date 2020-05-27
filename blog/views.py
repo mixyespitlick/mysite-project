@@ -73,13 +73,14 @@ def edit_blog_view(request, slug):
 
 def get_blog_queryset(query=None):
     queryset = []
-    queries = query.split(" ")
+    queries = query.split(" ")  # python install 2019 = [python, install, 2019]
     for q in queries:
         posts = BlogPost.objects.filter(
-            Q(title__icontains=q),
-            Q(body__icontains=q),
+            Q(title__icontains=q) |
+            Q(body__icontains=q)
         ).distinct()
 
         for post in posts:
             queryset.append(post)
+
     return list(set(queryset))

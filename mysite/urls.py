@@ -28,6 +28,7 @@ from account.views import (
     must_authenticate_view
 )
 
+
 urlpatterns = [
     path('', home_screen_view, name="home"),
     path('admin/', admin.site.urls),
@@ -37,6 +38,10 @@ urlpatterns = [
     path('logout/', logout_view, name="logout"),
     path('must_authenticate/', must_authenticate_view, name="must_authenticate"),
     path('register/', registration_view, name="register"),
+
+    # REST API
+    path('api/blog/', include('blog.api.urls', 'blog_api')),
+    path('api/account/', include('account.api.urls', 'account_api')),
 ]
 
 if settings.DEBUG:
