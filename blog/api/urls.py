@@ -5,6 +5,7 @@ from blog.api.views import (
     api_update_blog_view,
     api_delete_blog_view,
     api_create_blog_view,
+    api_is_author_of_blogpost,
     APIBlogListView,
 )
 
@@ -18,4 +19,5 @@ urlpatterns = [
     path('<slug>/delete', api_delete_blog_view, name='delete'),
     path('create', api_create_blog_view, name='create'),
     path('list', APIBlogListView.as_view(), name='list'),
+    path('<slug>/is_author', api_is_author_of_blogpost, name='is_author'),
 ]

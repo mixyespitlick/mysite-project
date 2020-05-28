@@ -65,6 +65,23 @@ def api_update_blog_view(request, slug):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def api_is_author_of_blogpost(request, slug):
+    try:
+        blog_post = BlogPost.objects.get(slug=slug)
+    except BlogPost.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    data = {}
+    user = request.user
+    if blog_post.author != user:
+        data['response'] = "You don't have permission to edit that."
+        return Response(data=data)
+    data['response'] = "You have permission to edit that."
+    return Response(data=data)
+
+
 @api_view(['DELETE', ])
 @permission_classes((IsAuthenticated,))
 def api_delete_blog_view(request, slug):
